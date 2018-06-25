@@ -1,0 +1,41 @@
+#messageBox {
+    border: none;
+    box-shadow: none;
+    /* border-radius: 50px */
+}
+#messageDiv{
+    border: thin solid grey;
+    padding: 5px;
+    border-radius: 50px
+}
+.btn{
+    border-radius: 50px;
+}
+#main{
+    border: thin solid grey;
+    padding-bottom: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 10px
+}
+hr{
+    padding: 0;
+    margin: 5px
+}
+textarea {
+  resize: none;
+}
+
+textarea::-webkit-scrollbar {
+   display: none;
+}
+
+#chatRoom{
+    max-height: 800px;
+    overflow: scroll;
+}
+#chatRoom::-webkit-scrollbar {
+    width: 5px;
+    scrollbar-3dlight-color: blueviolet
+}
