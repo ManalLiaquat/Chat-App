@@ -23,25 +23,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand active" href="index.html">Chat Room</a>
+                <a class="navbar-brand" href="">Chat Room</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="./pages/users.html">All Users</a>
+                    <li id="allUsers">
+                        <a href="pages/users.html">All Users</a>
                     </li>
-                    <li>
-                        <a href="./pages/room.html">Chat Room</a>
+                    <li id="friends">
+                        <a href="pages/friends.html">Friends</a>
+                    </li>
+                    <li id="room">
+                        <a href="pages/room.html">Chat Room</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="./pages/signup.html">
+                    <li id="signUp">
+                        <a href="pages/signup.html">
                             <span class="glyphicon glyphicon-user"></span> Sign Up</a>
                     </li>
-                    <li>
-                        <a href="./pages/login.html">
+                    <li id="login">
+                        <a href="pages/login.html">
                             <span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                    <li id="verify" style="display: none;">
+                        <a onclick="sendVerificationLink()" class="btn btn-danger white-text">
+                            <span class="glyphicon glyphicon-user"></span> Verify your email</a>
+                    </li>
+                    <li id="logout" style="display: none;">
+                        <a onclick="logOut()">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -49,9 +59,11 @@
     </nav>
     <!-- here is navbar -->
 
+    <div class="container">
 
+    </div>
 
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="./app.js"></script>
 </body>
