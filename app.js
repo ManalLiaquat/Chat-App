@@ -292,10 +292,33 @@ function getConversation() {
     });
 }
 
+
+var val = document.getElementById("messageBox");
+var btn = document.getElementById("sendMsgBtn");
+btn.addEventListener('click', (event) => {
+    // add(val.value);
+    sendMsg()
+    // val.value = "";
+});
+val.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        // add(val.value);
+        sendMsg();
+        // val.value = "";
+    }
+});
+
+// var msgVal = $("#messageBox");
+// msgVal.addEventListener('keydown', (e) => {
+//     if (event.keyCode === 13) {
+//         $('#sendMsgBtn').addEventListener('click', e =>{
+//             sendMsg();
+//         })
+//     }
+// });
+
 function sendMsg() {
     var msg = $("#messageBox").val();
-    // console.log(msg);
-    
     var firendsUID = localStorage.getItem("friendUID");
     let usersArray = []
     firebaseDb.ref("users/").once("value", (users) => {
@@ -310,91 +333,13 @@ function sendMsg() {
                 currentName = v.name;
             }
             if (firendsUID == v.uid) {
-                
+
                 firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push(msg)
                     .then(() => {
+                        $("#messageBox").val('');
                         console.log(`your this [${msg}] msg has been sent`)
                     })
-                
-                
-                
-                
-                
-                // $("#friendName").html(`You are chatting with ${v.name}`)
-
-                // console.log(v.uid)
-                // firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').on('child_added', (CUmessages) => { // current user msgs
-                //     console.log(CUmessages, 'cu msgs')
-                //     localStorage.setItem('CUmsg', JSON.stringify(CUmessages.val()));
-                //     var userdata = localStorage.getItem('CUmsg');
-                //     userdata = JSON.parse(userdata);
-                //     var createdLi = crateElement(`${userdata}   (${currentName})`, 'LI', 'list-group-item')
-                //     console.log('abcd', createdLi);
-                //     ul.appendChild(createdLi);
-                //     console.log(userdata, 'cu data')
-                // })
-                // firebaseDb.ref("users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').on('child_added', (FUmessages) => {  // friend (user) msgs
-                //     console.log(FUmessages, 'fu msgs')
-                //     localStorage.setItem('FUmsg', JSON.stringify(FUmessages.val()));
-                //     var userdata = localStorage.getItem('FUmsg');
-                //     userdata = JSON.parse(userdata);
-                //     var createdLi = crateElement(`${userdata}   (${v.name})`, 'LI', 'list-group-item')
-                //     console.log('abcd', createdLi);
-                //     ul.appendChild(createdLi);
-                //     console.log(userdata, 'fu data')
-
-                // })
-                // function crateElement(text, element, className) {
-                //     var li = document.createElement(element);
-                //     var textNode = document.createTextNode(text);
-                //     li.appendChild(textNode);
-                //     li.setAttribute('class', className);
-                //     return li;
-                // }
             }
         })
     })
 }
-            // console.log(frndUID, '[friend uid]')
-            // console.log(user.uid, '[current user]')
-            // let usersArray = []
-            // let currentUser = user.uid
-            // firebaseDb.ref("users/" + currentUser + '/' + 'chatRoom' + '/' + fuid)
-            //     .once("value", (chat) => {
-            //         let chatData = chat.val();
-            //         console.log(chatData, 'chat')
-
-            //         firebaseDb.ref("users/").on("value", (friend) => {
-            //             friendList = friend.val();
-            //             for (var key in chatData) {
-            //                 console.log(key, 'friend\'s uid');
-            //                 console.log(chatData[key], 'message');
-            //                 if (currentUser !== key) {
-            //                     friendList[key].uid = key
-            //                     usersArray.push(chatData[key])
-            //                 }
-            //             }
-            //             console.log(usersArray, 'db');
-
-            //             var ul = document.getElementById("chatRoom");
-            //             usersArray.map((v, i) => {
-
-            //                 var li = document.createElement('li');
-            //                 var liText = document.createTextNode(v.name)
-            //                 var btn = document.createElement('button')
-            //                 var btnText = document.createTextNode("Chat")
-            //                 btn.appendChild(btnText)
-            //                 btn.setAttribute("class", 'btn btn-success text-right')
-            //                 btn.addEventListener("click", (uid) => {
-            //                     console.log(v.uid);
-            //                     window.location = 'room.html'
-            //                 })
-
-            //                 li.setAttribute("class", 'list-group-item')
-            //                 li.appendChild(liText)
-            //                 li.appendChild(btn)
-            //                 ul.appendChild(li)
-            //             })
-            //         });
-
-            //     });
