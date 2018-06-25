@@ -204,8 +204,6 @@ function getFriendsList() {
                                 console.log(frndUID, 'selected friend\'s uid')
                                 localStorage.setItem('friendUID', frndUID);
                                 window.location = 'room.html'
-                                // setTimeout(() => {
-                                // }, 2000);
                             })
 
                             li.setAttribute("class", 'list-group-item')
@@ -242,10 +240,8 @@ function getConversation() {
                 user = currentuser
                 for (var key in usersList) {
                     // console.log(usersList[key])
-                    // if (currentuser !== key) {
                     usersList[key].uid = key
                     usersArray.push(usersList[key])
-                    // }
 
                 }
                 console.log(usersArray, 'usersArray')
@@ -288,8 +284,77 @@ function getConversation() {
                         }
                     }
                 })
-
             })
+        } else {
+            console.log('user is not signed in')
+
+        }
+    });
+}
+
+function sendMsg() {
+    var msg = $("#messageBox").val();
+    // console.log(msg);
+    
+    var firendsUID = localStorage.getItem("friendUID");
+    let usersArray = []
+    firebaseDb.ref("users/").once("value", (users) => {
+        let usersList = users.val()
+        var currentuser = auth.currentUser.uid;
+        for (var key in usersList) {
+            usersList[key].uid = key
+            usersArray.push(usersList[key])
+        }
+        usersArray.map((v, i) => {
+            if (currentuser === v.uid) {
+                currentName = v.name;
+            }
+            if (firendsUID == v.uid) {
+                
+                firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push(msg)
+                    .then(() => {
+                        console.log(`your this [${msg}] msg has been sent`)
+                    })
+                
+                
+                
+                
+                
+                // $("#friendName").html(`You are chatting with ${v.name}`)
+
+                // console.log(v.uid)
+                // firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').on('child_added', (CUmessages) => { // current user msgs
+                //     console.log(CUmessages, 'cu msgs')
+                //     localStorage.setItem('CUmsg', JSON.stringify(CUmessages.val()));
+                //     var userdata = localStorage.getItem('CUmsg');
+                //     userdata = JSON.parse(userdata);
+                //     var createdLi = crateElement(`${userdata}   (${currentName})`, 'LI', 'list-group-item')
+                //     console.log('abcd', createdLi);
+                //     ul.appendChild(createdLi);
+                //     console.log(userdata, 'cu data')
+                // })
+                // firebaseDb.ref("users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').on('child_added', (FUmessages) => {  // friend (user) msgs
+                //     console.log(FUmessages, 'fu msgs')
+                //     localStorage.setItem('FUmsg', JSON.stringify(FUmessages.val()));
+                //     var userdata = localStorage.getItem('FUmsg');
+                //     userdata = JSON.parse(userdata);
+                //     var createdLi = crateElement(`${userdata}   (${v.name})`, 'LI', 'list-group-item')
+                //     console.log('abcd', createdLi);
+                //     ul.appendChild(createdLi);
+                //     console.log(userdata, 'fu data')
+
+                // })
+                // function crateElement(text, element, className) {
+                //     var li = document.createElement(element);
+                //     var textNode = document.createTextNode(text);
+                //     li.appendChild(textNode);
+                //     li.setAttribute('class', className);
+                //     return li;
+                // }
+            }
+        })
+    })
+}
             // console.log(frndUID, '[friend uid]')
             // console.log(user.uid, '[current user]')
             // let usersArray = []
@@ -333,10 +398,3 @@ function getConversation() {
             //         });
 
             //     });
-
-        } else {
-            console.log('user is not signed in')
-
-        }
-    });
-}
