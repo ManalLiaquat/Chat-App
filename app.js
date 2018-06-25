@@ -142,7 +142,7 @@ function sendVerificationLink() {
 function logOut() {
     firebase.auth().signOut()
         .then(function (resolve) {
-            window.location.replace("index.html");
+            window.location.replace("../index.html");
             console.log("Succesfully Signed-Out", resolve);
         })
         .catch(function (err) {
