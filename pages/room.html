@@ -23,28 +23,36 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html">Chat Room</a>
+                <a class="navbar-brand" href="">Chat Room</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li id="allUsers">
                         <a href="./users.html">All Users</a>
                     </li>
-                    <li>
+                    <li id="friends">
                         <a href="./friends.html">Friends</a>
                     </li>
-                    <li class="active">
+                    <li id="room" class="active">
                         <a href="./room.html">Chat Room</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <li id="signUp">
                         <a href="./signup.html">
                             <span class="glyphicon glyphicon-user"></span> Sign Up</a>
                     </li>
-                    <li>
+                    <li id="login">
                         <a href="./login.html">
                             <span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                    <li id="verify" style="display: none;">
+                        <a onclick="sendVerificationLink()">
+                            <span class="glyphicon glyphicon-user"></span> Verify</a>
+                    </li>
+                    <li id="logout" style="display: none;">
+                        <a onclick="logOut()">
+                            <span></span> Logout</a>
                     </li>
                 </ul>
             </div>
