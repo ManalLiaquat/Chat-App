@@ -2,14 +2,15 @@
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyDiLhM-eNlinVjxUqZ5u_kiIowI105EcDQ",
-    authDomain: "chattychatpk.firebaseapp.com",
-    databaseURL: "https://chattychatpk.firebaseio.com",
-    projectId: "chattychatpk",
-    storageBucket: "",
-    messagingSenderId: "90533697446"
+    apiKey: "AIzaSyAH24oE91EfPlB1u4fIRMbaq_T48fgJ-kY",
+    authDomain: "manal-liaquat.firebaseapp.com",
+    databaseURL: "https://manal-liaquat.firebaseio.com",
+    projectId: "manal-liaquat",
+    storageBucket: "manal-liaquat.appspot.com",
+    messagingSenderId: "174271760047"
 };
 firebase.initializeApp(config);
+
 // Initialize Firebase Ends
 
 /* =================================================================================== */
@@ -56,7 +57,7 @@ function signUp() {
                     email: email,
                     name: name
                 }
-                firebaseDb.ref("users/" + uid + '/').set(objData)
+                firebaseDb.ref("ChatApp/users/" + uid + '/').set(objData)
                     .then(() => {
                         swal({
                             title: "Success!",
@@ -121,7 +122,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     } else {
         $("#allUsers").hide();
         $("#friends").hide();
-        $("#room").hide();  
+        $("#room").hide();
         $("#signUp").show();
         $("#login").show();
         $("#logout").hide();
@@ -161,7 +162,7 @@ function getAllUsers() {
         if (user) {
 
             let usersArray = []
-            firebaseDb.ref("users/").once("value", (users) => {
+            firebaseDb.ref("ChatApp/users/").once("value", (users) => {
                 let usersList = users.val()
                 // console.log(usersList, "usersList")
                 var currentuser = auth.currentUser.uid;
@@ -188,9 +189,9 @@ function getAllUsers() {
                     btn.addEventListener("click", (e) => {
                         // console.log(v.uid)
 
-                        firebaseDb.ref("users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').push('Wa-Alaikum-Assalam')
+                        firebaseDb.ref("ChatApp/users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').push('Wa-Alaikum-Assalam')
                             .then(() => {
-                                firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push("Assalam-o-Alaikum")
+                                firebaseDb.ref("ChatApp/users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push("Assalam-o-Alaikum")
                                 swal({
                                     title: "success!",
                                     text: "User Added in your Chat list",
@@ -227,12 +228,12 @@ function getFriendsList() {
             // console.log(user.uid, '[current user]')
             let usersArray = []
             let currentUser = user.uid
-            firebaseDb.ref("users/" + currentUser + '/' + 'chatRoom' + '/')
+            firebaseDb.ref("ChatApp/users/" + currentUser + '/' + 'chatRoom' + '/')
                 .once("value", (chat) => {
                     let roomData = chat.val();
                     // console.log(roomData, 'friendlist')
 
-                    firebaseDb.ref("users/").once("value", (friends) => {
+                    firebaseDb.ref("ChatApp/users/").once("value", (friends) => {
                         friendList = friends.val();
                         for (var key in roomData) {
                             // console.log(key, 'friend\'s uid');
@@ -287,7 +288,7 @@ function getConversation() {
             var firendsUID = localStorage.getItem("friendUID");
             // console.log(firendsUID, "[friends uid]")
             let usersArray = []
-            firebaseDb.ref("users/").once("value", (users) => {
+            firebaseDb.ref("ChatApp/users/").once("value", (users) => {
                 let usersList = users.val()
                 // console.log(usersList, "usersList")
                 var currentuser = auth.currentUser.uid;
@@ -309,7 +310,7 @@ function getConversation() {
                         $("#friendName").html(`You are chatting with ${v.name}`)
 
                         // console.log(v.uid)
-                        firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').on('child_added', (CUmessages) => { // current user msgs
+                        firebaseDb.ref("ChatApp/users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').on('child_added', (CUmessages) => { // current user msgs
                             // console.log(CUmessages, 'cu msgs')
                             localStorage.setItem('CUmsg', JSON.stringify(CUmessages.val()));
                             var userdata = localStorage.getItem('CUmsg');
@@ -319,7 +320,7 @@ function getConversation() {
                             ul.appendChild(createdLi);
                             // console.log(userdata, 'cu data')
                         })
-                        firebaseDb.ref("users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').on('child_added', (FUmessages) => {  // friend (user) msgs
+                        firebaseDb.ref("ChatApp/users/" + currentuser + "/" + "chatRoom" + '/' + v.uid + '/').on('child_added', (FUmessages) => {  // friend (user) msgs
                             // console.log(FUmessages, 'fu msgs')
                             localStorage.setItem('FUmsg', JSON.stringify(FUmessages.val()));
                             var userdata = localStorage.getItem('FUmsg');
@@ -362,7 +363,7 @@ function sendMsg() {
     var msg = $("#messageBox").val();
     var firendsUID = localStorage.getItem("friendUID");
     let usersArray = []
-    firebaseDb.ref("users/").once("value", (users) => {
+    firebaseDb.ref("ChatApp/users/").once("value", (users) => {
         let usersList = users.val()
         var currentuser = auth.currentUser.uid;
         for (var key in usersList) {
@@ -375,7 +376,7 @@ function sendMsg() {
             }
             if (firendsUID == v.uid) {
 
-                firebaseDb.ref("users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push(msg)
+                firebaseDb.ref("ChatApp/users/" + v.uid + "/" + "chatRoom" + '/' + currentuser + '/').push(msg)
                     .then(() => {
                         $("#messageBox").val('');
                         console.log(`your this [${msg}] msg has been sent`)
